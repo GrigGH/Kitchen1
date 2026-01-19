@@ -404,35 +404,6 @@ loader.load(
     }
 );
 
-//Invisible action button \
-
-// const buttonGeometry = new THREE.BoxGeometry(0.3, 1.1, 0.6);
-// const buttonMaterial = new THREE.MeshBasicMaterial({
-//     // visible: false 
-//      color: 0xff0000,   
-//     wireframe: true    
-// });
-
-// const invisibleButton = new THREE.Mesh(buttonGeometry, buttonMaterial);
-// invisibleButton.position.set(2.3, 0.7, -0.15); 
-// scene.add(invisibleButton);
-
-// const raycaster = new THREE.Raycaster();
-// const mouse = new THREE.Vector2();
-
-// window.addEventListener('click', (event) => {
-//     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-//     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-//     raycaster.setFromCamera(mouse, camera);
-
-//     const intersects = raycaster.intersectObject(invisibleButton);
-
-//     if (intersects.length > 0) {
-//         alert("clicked");
-//         // doAction();
-//     }
-// });
 
 const buttonRegistry = {};
 const buttons = [];
