@@ -329,7 +329,7 @@ loader.load('models/glassDoor.glb', (gltf) => {
         0,
         -2.03
     );
-    const pivotHelper = new THREE.AxesHelper(1); // size of axes
+    const pivotHelper = new THREE.AxesHelper(1); 
     pivot.add(pivotHelper);
 
 
