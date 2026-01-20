@@ -81,66 +81,174 @@ loader.load(
     }
 );
 //Green shelf door
+const pivotBottomDoor = new THREE.Group();
+scene.add(pivotBottomDoor);
+
 loader.load(
     'models/greenDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(1, 1, 1);
+        model.scale.set(0.99, 0.95, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(2.47, -1.3, -0.01);
+        model.position.set(0.33, -0.1, -1.3);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotBottomDoor.position.set(
+            2.17,
+            -1.2,
+            1.31
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotBottomDoor.add(pivotHelper);
+
+        pivotBottomDoor.add(model);
     }
 );
+
+const pivotTopDoor = new THREE.Group();
+scene.add(pivotTopDoor);
+
 loader.load(
     'models/greenDoor.glb',
     (gltf) => {
         const model = gltf.scene;
         scene.add(model);
         model.scale.set(1, 2.12, 1);
-        model.rotation.y = - Math.PI / 2;
-        model.position.set(2.47, 0.03, -0);
+        model.rotation.y = Math.PI / 2;
+        model.position.set(-0.28, -0.22, 2);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotTopDoor.position.set(
+            2.17,
+            0.25,
+            1.3
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotTopDoor.add(pivotHelper);
+
+        pivotTopDoor.add(model);
     }
 );
 //Cuppboard doors
+const pivotTop4 = new THREE.Group();
+scene.add(pivotTop4);
 loader.load(
     'models/cuppboardDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
         model.scale.set(0.6, 0.89, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(4.05, -1.3, 0.76);
+        model.position.set(1.65, -1.45, -0.165);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotTop4.position.set(
+            2.4,
+            0.15,
+            0.9
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotTop4.add(pivotHelper);
+
+
+        pivotTop4.add(model);
     }
 );
+
+const pivotTop2 = new THREE.Group();
+scene.add(pivotTop2);
+
 loader.load(
     'models/cuppboardDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
+
         model.scale.set(1, 0.89, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(4.05, -1.3, -0.69);
+        model.position.set(1.65, -1.45, -0.165);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotTop2.position.set(
+            2.4,
+            0.15,
+            -0.53
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotTop2.add(pivotHelper);
+
+
+        pivotTop2.add(model);
     }
 );
+
+const pivotTop3 = new THREE.Group();
+scene.add(pivotTop3);
+
 loader.load(
     'models/cuppboardDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
+
         model.scale.set(0.95, 0.89, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(4.05, -1.3, 0.028);
+        model.position.set(1.65, -1.45, -0.165);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotTop3.position.set(
+            2.4,
+            0.15,
+            0.19
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotTop3.add(pivotHelper);
+
+
+        pivotTop3.add(model);
     }
 );
+
+const pivotTop = new THREE.Group();
+scene.add(pivotTop);
+
 loader.load(
     'models/cuppboardDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
+
         model.scale.set(1.1, 0.89, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(4.05, -1.3, -1.48);
+        model.position.set(1.65, -1.45, -0.19);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        pivotTop.position.set(
+            2.4,
+            0.15,
+            -1.3
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotTop.add(pivotHelper);
+
+
+        pivotTop.add(model);
     }
+
 );
 //Shelf cutter
 loader.load(
@@ -267,6 +375,8 @@ loader.load(
 );
 
 //Bottom cuppboard door
+
+
 loader.load(
     'models/greenDoor.glb',
     (gltf) => {
@@ -329,7 +439,7 @@ loader.load('models/glassDoor.glb', (gltf) => {
         0,
         -2.03
     );
-    const pivotHelper = new THREE.AxesHelper(1); 
+    const pivotHelper = new THREE.AxesHelper(1);
     pivot.add(pivotHelper);
 
 
@@ -411,7 +521,9 @@ const buttons = [];
 function createButton(id, position, size, onClick) {
     const geometry = new THREE.BoxGeometry(...size);
     const material = new THREE.MeshBasicMaterial({
-        visible: false
+        // visible: false
+        color: 0xff0000,
+        wireframe: true
     });
 
     const button = new THREE.Mesh(geometry, material);
@@ -426,41 +538,80 @@ function createButton(id, position, size, onClick) {
     buttonRegistry[id] = button;
 }
 
-let doorOpen = false;
-let targetRotation = 0;
+function createDoorController(pivot) {
+    return {
+        pivot,
+        open: false,
+        targetRotation: 0
+    };
+}
+
+
+const doorA = createDoorController(pivot);
+const doorTop = createDoorController(pivotTop);
+const doorTop2 = createDoorController(pivotTop2);
+const doorTop3 = createDoorController(pivotTop3);
+const doorTop4 = createDoorController(pivotTop4);
+const doorBottom = createDoorController(pivotBottomDoor);
+const doorMediumTop = createDoorController(pivotTopDoor);
 
 createButton(
     "ButtonA",
     [2.3, 0.7, -0.9],
     [0.3, 1.1, 0.8],
-    () => alert("Button A clicked")
+    () => {
+        if (!doorTop.pivot) return;
+
+        doorTop.open = !doorTop.open;
+        doorTop.targetRotation = doorTop.open ? -Math.PI / 2 : 0;
+    }
 );
 
 createButton(
     "ButtonB",
     [2.3, 0.7, -0.15],
     [0.3, 1.1, 0.6],
-    () => alert("Button B clicked")
+    () => {
+        if (!doorTop2.pivot) return;
+
+        doorTop2.open = !doorTop2.open;
+        doorTop2.targetRotation = doorTop2.open ? -Math.PI / 2 : 0;
+    }
 );
 
 createButton(
     "ButtonC",
     [2.3, 0.7, 0.53],
     [0.3, 1.1, 0.6],
-    () => alert("Button C clicked")
+    () => {
+        if (!doorTop3.pivot) return;
+
+        doorTop3.open = !doorTop3.open;
+        doorTop3.targetRotation = doorTop3.open ? -Math.PI / 2 : 0;
+    }
 );
 
 createButton(
     "ButtonD",
     [2.3, 0.7, 1.08],
     [0.3, 1.1, 0.4],
-    () => alert("Button D clicked")
+    () => {
+        if (!doorTop4.pivot) return;
+
+        doorTop4.open = !doorTop4.open;
+        doorTop4.targetRotation = doorTop4.open ? -Math.PI / 2 : 0;
+    }
 );
 createButton(
     "ButtonE",
     [2.3, 0.8, 1.65],
     [0.3, 1.1, 0.7],
-    () => alert("Button E clicked")
+    () => {
+        if (!doorMediumTop.pivot) return;
+
+        doorMediumTop.open = !doorMediumTop.open;
+        doorMediumTop.targetRotation = doorMediumTop.open ? -Math.PI / 2 : 0;
+    }
 );
 createButton(
     "ButtonF",
@@ -484,20 +635,22 @@ createButton(
     "ButtonH",
     [2.3, -0.95, 1.65],
     [0.3, 0.5, 0.7],
-    () => alert("Button H clicked")
+    () => {
+        if (!doorBottom.pivot) return;
+
+        doorBottom.open = !doorBottom.open;
+        doorBottom.targetRotation = doorBottom.open ? -Math.PI / 2 : 0;
+    }
 );
 createButton(
     "ButtonI",
     [2.3, 0, -1.67],
     [0.25, 2.5, 0.7],
     () => {
-        if (!pivot) return;
-        if (!doorOpen) {
-            targetRotation = -Math.PI / 2;
-        } else {
-            targetRotation = 0;
-        }
-        doorOpen = !doorOpen;
+        if (!doorA.pivot) return;
+
+        doorA.open = !doorA.open;
+        doorA.targetRotation = doorA.open ? -Math.PI / 2 : 0;
     }
 );
 const raycaster = new THREE.Raycaster();
@@ -527,15 +680,25 @@ window.addEventListener('click', (event) => {
 function animate() {
     requestAnimationFrame(animate);
 
-    if (pivot) {
+    [doorA, doorTop, doorTop2, doorTop3, doorTop4, doorBottom, doorMediumTop].forEach(door => {
+        const diff = door.targetRotation - door.pivot.rotation.y;
+        door.pivot.rotation.y += diff * 0.1;
 
-        const diff = targetRotation - pivot.rotation.y;
-        pivot.rotation.y += diff * 0.1;
+        if (Math.abs(diff) < 0.001) {
+            door.pivot.rotation.y = door.targetRotation;
+        }
+    });
+    // [doorMediumTop].forEach(door => {
+    //     const diff = door.targetRotation - door.pivot.rotation.y;
+    //     door.pivot.rotation.y += diff * 0.1;
 
-    }
+    //     if (Math.abs(diff) < 0.001) {
+    //         door.pivot.rotation.y = door.targetRotation;
+    //     }
+    // });
+    
 
-    controls.update();
     renderer.render(scene, camera);
 }
-
 animate();
+
