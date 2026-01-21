@@ -92,9 +92,6 @@ loader.load(
         model.rotation.y = - Math.PI / 2;
         model.position.set(0.33, -0.1, -1.3);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotBottomDoor.position.set(
             2.17,
@@ -120,9 +117,6 @@ loader.load(
         model.rotation.y = Math.PI / 2;
         model.position.set(-0.28, -0.22, 2);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotTopDoor.position.set(
             2.17,
@@ -146,9 +140,6 @@ loader.load(
         model.rotation.y = - Math.PI / 2;
         model.position.set(1.65, -1.45, -0.165);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotTop4.position.set(
             2.4,
@@ -175,9 +166,6 @@ loader.load(
         model.rotation.y = - Math.PI / 2;
         model.position.set(1.65, -1.45, -0.165);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotTop2.position.set(
             2.4,
@@ -204,9 +192,6 @@ loader.load(
         model.rotation.y = - Math.PI / 2;
         model.position.set(1.65, -1.45, -0.165);
 
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotTop3.position.set(
             2.4,
@@ -232,10 +217,6 @@ loader.load(
         model.scale.set(1.1, 0.89, 1);
         model.rotation.y = - Math.PI / 2;
         model.position.set(1.65, -1.45, -0.19);
-
-        const box = new THREE.Box3().setFromObject(model);
-        const size = new THREE.Vector3();
-        box.getSize(size);
 
         pivotTop.position.set(
             2.4,
@@ -283,108 +264,108 @@ loader.load(
 );
 //Cuppboard bottom
 
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.28, 0.22);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.6, 1.1);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.22);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.817, 1.1);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.22);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -1.07, 1.1);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.28, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.6, 0.48);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.817, 0.48);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -1.07, 0.48);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.28, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.6, -0.375);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -0.817, -0.375);
-    }
-);
-loader.load(
-    'models/darak.glb',
-    (gltf) => {
-        const model = gltf.scene;
-        scene.add(model);
-        model.scale.set(0.2, 0.4, 0.47);
-        model.rotation.y = Math.PI;
-        model.position.set(2.5, -1.07, -0.375);
-    }
-);
+const drawers = [];
+
+function loadDrawer({
+    position,
+    scale,
+    openOffsetX = -0.25
+}) {
+    const drawer = {
+        mesh: null,
+        open: false,
+        closedX: 0,
+        openX: 0,
+        targetX: 0
+    };
+
+    loader.load('models/darak.glb', (gltf) => {
+        drawer.mesh = gltf.scene;
+        scene.add(drawer.mesh);
+
+        drawer.mesh.scale.set(...scale);
+        drawer.mesh.rotation.y = Math.PI;
+        drawer.mesh.position.set(...position);
+
+        drawer.closedX = drawer.mesh.position.x;
+        drawer.openX = drawer.closedX + openOffsetX;
+        drawer.targetX = drawer.closedX;
+    });
+
+    drawers.push(drawer);
+    return drawer;
+}
+
+
+const drawerA = loadDrawer({
+    position: [2.5, -1.07, -0.375],
+    scale: [0.2, 0.4, 0.47]
+});
+
+
+const drawerB = loadDrawer({
+    position: [2.5, -0.817, -0.375],
+    scale: [0.2, 0.4, 0.47]
+});
+
+const drawerC = loadDrawer({
+    position: [2.5, -0.6, -0.375],
+    scale: [0.2, 0.28, 0.47]
+});
+
+
+const drawerD = loadDrawer({
+    position: [2.5, -0.6, 0.48],
+    scale: [0.2, 0.28, 0.47]
+});
+
+const drawerE = loadDrawer({
+    position: [2.5, -0.817, 0.48],
+    scale: [0.2, 0.4, 0.47]
+});
+
+const drawerF = loadDrawer({
+    position: [2.5, -1.07, 0.48],
+    scale: [0.2, 0.4, 0.47]
+});
+const drawerG = loadDrawer({
+    position: [2.5, -0.6, 1.1],
+    scale: [0.2, 0.28, 0.22]
+});
+const drawerH = loadDrawer({
+    position: [2.5, -0.817, 1.1],
+    scale: [0.2, 0.4, 0.22]
+});
+const drawerI = loadDrawer({
+    position: [2.5, -1.07, 1.1],
+    scale: [0.2, 0.4, 0.22]
+});
+
+
 
 //Bottom cuppboard door
-
+const pivotUnderSink = new THREE.Group();
+scene.add(pivotUnderSink);
 
 loader.load(
     'models/greenDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
+        // scene.add(model);
         model.scale.set(0.7, 1.4, 1);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(2.5, -1.34, -2.2);
+        model.position.set(0.27, -0.15, -0.92);
+
+        pivotUnderSink.position.set(
+            2.25,
+            -1.2,
+            -1.29
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotUnderSink.add(pivotHelper);
+
+
+        pivotUnderSink.add(model);
     }
 );
 //Shelf cutter bottom
@@ -429,10 +410,6 @@ loader.load('models/glassDoor.glb', (gltf) => {
     bigShelf = gltf.scene;
 
     bigShelf.scale.set(1.02, 2.02, 1);
-
-    const box = new THREE.Box3().setFromObject(bigShelf);
-    const size = new THREE.Vector3();
-    box.getSize(size);
 
     pivot.position.set(
         2.17,
@@ -482,16 +459,33 @@ loader.load(
     }
 );
 //Oven Doors
+const pivotForBottomOven = new THREE.Group();
+scene.add(pivotForBottomOven);
+
 loader.load(
     'models/ovenDoor.glb',
     (gltf) => {
         const model = gltf.scene;
-        scene.add(model);
+
         model.scale.set(1, 1, 1.05);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(2.47, -1.3, 0);
+        model.position.set(0.31, -0.62, -1.3);
+
+        pivotForBottomOven.position.set(
+            2.15,
+            -0.7,
+            1.3
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotForBottomOven.add(pivotHelper);
+
+        pivotForBottomOven.add(model);
     }
 );
+
+const pivotForTopOven = new THREE.Group();
+scene.add(pivotForTopOven);
+
 loader.load(
     'models/ovenDoor.glb',
     (gltf) => {
@@ -499,7 +493,17 @@ loader.load(
         scene.add(model);
         model.scale.set(1, 1, 1.05);
         model.rotation.y = - Math.PI / 2;
-        model.position.set(2.47, -0.85, 0);
+        model.position.set(0.31, -0.62, -1.3);
+
+        pivotForTopOven.position.set(
+            2.15,
+            -0.23,
+            1.3
+        );
+        const pivotHelper = new THREE.AxesHelper(1);
+        pivotForTopOven.add(pivotHelper);
+
+        pivotForTopOven.add(model);
     }
 );
 //Kitchen Room
@@ -546,6 +550,15 @@ function createDoorController(pivot) {
     };
 }
 
+function bindDrawerButton(id, pos, size, drawer) {
+    createButton(id, pos, size, () => {
+        if (!drawer.mesh) return;
+
+        drawer.open = !drawer.open;
+        drawer.targetX = drawer.open ? drawer.openX : drawer.closedX;
+    });
+}
+
 
 const doorA = createDoorController(pivot);
 const doorTop = createDoorController(pivotTop);
@@ -554,6 +567,20 @@ const doorTop3 = createDoorController(pivotTop3);
 const doorTop4 = createDoorController(pivotTop4);
 const doorBottom = createDoorController(pivotBottomDoor);
 const doorMediumTop = createDoorController(pivotTopDoor);
+const ovenBottom = createDoorController(pivotForBottomOven);
+const ovenTop = createDoorController(pivotForTopOven);
+const doorUnderSink = createDoorController(pivotUnderSink);
+
+bindDrawerButton("ButtonJ", [2.3, -1.05, -0.37], [0.25, 0.2, 0.7], drawerA);
+bindDrawerButton("ButtonK", [2.3, -0.83, -0.37], [0.25, 0.2, 0.7], drawerB);
+bindDrawerButton("ButtonL", [2.3, -0.61, -0.37], [0.25, 0.1, 0.7], drawerC);
+bindDrawerButton("ButtonM", [2.3, -0.61, 0.5], [0.25, 0.1, 0.7], drawerD);
+bindDrawerButton("ButtonN", [2.3, -0.83, 0.5], [0.25, 0.2, 0.7], drawerE);
+bindDrawerButton("ButtonO", [2.3, -1.05, 0.5], [0.25, 0.2, 0.7], drawerF);
+bindDrawerButton("ButtonP", [2.24, -0.61, 1.1], [0.1, 0.1, 0.3], drawerG);
+bindDrawerButton("ButtonQ", [2.24, -0.85, 1.1], [0.1, 0.2, 0.3], drawerH);
+bindDrawerButton("ButtonR", [2.24, -1.1, 1.1], [0.1, 0.2, 0.3], drawerI);
+
 
 createButton(
     "ButtonA",
@@ -617,20 +644,25 @@ createButton(
     "ButtonF",
     [2.3, 0.05, 1.65],
     [0.3, 0.4, 0.7],
-    () => alert("Button F clicked")
+    () => {
+        if (!ovenTop.pivot) return;
+
+        ovenTop.open = !ovenTop.open;
+        ovenTop.targetRotation = ovenTop.open ? -Math.PI / 2 : 0;
+    }
 );
 createButton(
     "ButtonG",
     [2.3, -0.4, 1.65],
     [0.3, 0.4, 0.7],
-    () => alert("Button G clicked")
+    () => {
+        if (!ovenBottom.pivot) return;
+
+        ovenBottom.open = !ovenBottom.open;
+        ovenBottom.targetRotation = ovenBottom.open ? -Math.PI / 2 : 0;
+    }
 );
-createButton(
-    "ButtonG",
-    [2.3, -0.4, 1.65],
-    [0.3, 0.4, 0.7],
-    () => alert("Button G clicked")
-);
+
 createButton(
     "ButtonH",
     [2.3, -0.95, 1.65],
@@ -651,6 +683,17 @@ createButton(
 
         doorA.open = !doorA.open;
         doorA.targetRotation = doorA.open ? -Math.PI / 2 : 0;
+    }
+);
+createButton(
+    "ButtonS",
+    [2.24, -0.85, -1.05],
+    [0.2, 0.6, 0.35],
+    () => {
+        if (!doorUnderSink.pivot) return;
+
+        doorUnderSink.open = !doorUnderSink.open;
+        doorUnderSink.targetRotation = doorUnderSink.open ? -Math.PI / 2 : 0;
     }
 );
 const raycaster = new THREE.Raycaster();
@@ -677,10 +720,13 @@ window.addEventListener('click', (event) => {
 
 
 // Animation loop
+
+const EPSILON = 0.001;
+
 function animate() {
     requestAnimationFrame(animate);
 
-    [doorA, doorTop, doorTop2, doorTop3, doorTop4, doorBottom, doorMediumTop].forEach(door => {
+    [doorA, doorTop, doorTop2, doorTop3, doorTop4, doorBottom, doorMediumTop, doorUnderSink].forEach(door => {
         const diff = door.targetRotation - door.pivot.rotation.y;
         door.pivot.rotation.y += diff * 0.1;
 
@@ -688,15 +734,35 @@ function animate() {
             door.pivot.rotation.y = door.targetRotation;
         }
     });
-    // [doorMediumTop].forEach(door => {
-    //     const diff = door.targetRotation - door.pivot.rotation.y;
-    //     door.pivot.rotation.y += diff * 0.1;
+    [ovenBottom, ovenTop].forEach(door => {
+        const diff = door.targetRotation + door.pivot.rotation.z;
+        door.pivot.rotation.z -= diff * 0.1;
 
-    //     if (Math.abs(diff) < 0.001) {
-    //         door.pivot.rotation.y = door.targetRotation;
-    //     }
-    // });
-    
+        if (Math.abs(diff) < 0.001) {
+            door.pivot.rotation.z = - door.targetRotation;
+        }
+    });
+    [ovenBottom, ovenTop].forEach(door => {
+        const diff = door.targetRotation + door.pivot.rotation.z;
+        door.pivot.rotation.z -= diff * 0.1;
+
+        if (Math.abs(diff) < 0.001) {
+            door.pivot.rotation.z = - door.targetRotation;
+        }
+    });
+    for (const drawer of drawers) {
+        if (!drawer.mesh) continue;
+
+        const diff = drawer.targetX - drawer.mesh.position.x;
+
+        if (Math.abs(diff) > EPSILON) {
+            drawer.mesh.position.x += diff * 0.15;
+        } else {
+            drawer.mesh.position.x = drawer.targetX;
+        }
+    }
+
+
 
     renderer.render(scene, camera);
 }
