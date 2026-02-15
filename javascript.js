@@ -354,7 +354,8 @@ window.addEventListener("click", (e) => {
   if (fn) fn();
 });
 
-//Resizing function
+//Resizing 
+
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
