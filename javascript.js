@@ -6,15 +6,38 @@ import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
 //Config 
 
 const CONFIG = {
-  debug: { showButtons: false, showAxes: false },
-  camera: { fov: 75, near: 0.1, far: 1000, z: 5 },
-  renderer: { antialias: true, pixelRatio: Math.min(window.devicePixelRatio, 2) },
-  env: { background: 0xdddddd, hdrPath: null /* "assets/exrimg/xxx.exr" */ },
+  debug: {
+    showButtons: false,
+    showAxes: false
+  },
+
+  camera: {
+    fov: 75,
+    near: 0.1,
+    far: 1000,
+    z: 5
+  },
+
+  renderer: {
+    antialias: true,
+    pixelRatio: Math.min(window.devicePixelRatio, 2)
+  },
+
+  env: {
+    background: 0xdddddd,
+    hdrPath: null
+  },
+
   lights: {
     ambient: { color: 0xffffff, intensity: 0.9 },
-    dir: { color: 0xffffff, intensity: 1.2, pos: [5, 4, 7] },
+    dir: { color: 0xffffff, intensity: 1.2, pos: [5, 0, 7] },
   },
-  anim: { doorLerp: 0.12, drawerLerp: 0.15, eps: 0.001 },
+
+  anim: {
+    doorLerp: 0.12,
+    drawerLerp: 0.15,
+    eps: 0.001
+  },
 };
 
 const scene = new THREE.Scene();
@@ -38,9 +61,9 @@ controls.enableDamping = true;
 
 scene.add(new THREE.AmbientLight(CONFIG.lights.ambient.color, CONFIG.lights.ambient.intensity));
 
-const dirLight = new THREE.DirectionalLight(CONFIG.lights.dir.color, CONFIG.lights.dir.intensity);
-dirLight.position.set(...CONFIG.lights.dir.pos);
-scene.add(dirLight);
+// const dirLight = new THREE.DirectionalLight(CONFIG.lights.dir.color, CONFIG.lights.dir.intensity);
+// dirLight.position.set(...CONFIG.lights.dir.pos);
+// scene.add(dirLight);
 
 //Loading UI
 const loadingEl = document.getElementById("loading");
@@ -123,7 +146,7 @@ function createButton(id, position, size, onClick) {
   const mat = new THREE.MeshBasicMaterial({
     color: 0xff0000,
     wireframe: true,
-    visible: CONFIG.debug.showButtons, 
+    visible: CONFIG.debug.showButtons,
   });
 
   const box = new THREE.Mesh(geo, mat);
@@ -205,11 +228,38 @@ function buildKitchen() {
   });
 
   loadModel("models/kitchen.glb", scene, {
-    scale: [0.3, 0.3, 0.31],
+    scale: [0.35, 0.3, 0.31],
     position: [0, 0.05, 0],
     rotationY: Math.PI / 2,
   });
+  loadModel("models/tableStool.glb", scene, {
+    scale: [0.8, 0.8, 0.8],
+    position: [-1.8, -1.3, 0],
+    rotationY: -Math.PI / 2,
+  });
+  loadModel("models/fridge.glb", scene, {
+    scale: [1.2, 1.2, 0.8],
+    position: [2.4, -1.3, 2.45],
+    rotationY: -Math.PI / 2,
+  });
+  loadModel("models/chendalier.glb", scene, {
+    scale: [0.1, 0.1, 0.1],
+    position: [0, 0.3, 0],
+    rotationY: -Math.PI / 2,
+  }, (chandelier) => {
 
+    const chandelierDir = new THREE.DirectionalLight(0xffffff, 1.2);
+
+    chandelierDir.position.set(0, 0.4, 0);
+
+    const target = new THREE.Object3D();
+    target.position.set(0, -2, 0); 
+    chandelier.add(target);
+
+    chandelierDir.target = target;
+
+    chandelier.add(chandelierDir);
+  });
   // Doors
   const doorDefs = [
     {
