@@ -15,7 +15,7 @@ const CONFIG = {
     fov: 75,
     near: 0.1,
     far: 1000,
-    z: 5
+    z: 2
   },
 
   renderer: {
@@ -29,8 +29,8 @@ const CONFIG = {
   },
 
   lights: {
-    ambient: { color: 0xffffff, intensity: 1.3 },
-    dir: { color: 0xffffff, intensity: 1.2, pos: [5, 0, 7] },
+    ambient: { color: 0xffffff, intensity: 3 },
+    dir: { color: 0xffffff, intensity: 1.8, pos: [5, 0, 7] },
   },
 
   anim: {
@@ -273,8 +273,8 @@ function buildKitchen() {
     chandelier.add(chandelierDir);
   });
   loadModel("models/trashBasket.glb", scene, {
-    scale: [2, 2, 2],
-    position: [2.4, -1.3, -2.45],
+    scale: [1, 1, 1],
+    position: [2.4, -1.2, -1.0],
     rotationY: -Math.PI / 2,
   });
 
@@ -310,15 +310,15 @@ function buildKitchen() {
 
     {
       pivotPos: [2.4, 0.15, 0.9], path: "models/cuppboardDoor.glb",
-      transform: { scale: [0.6, 0.89, 1], position: [1.65, -1.45, -0.165], rotationY: -Math.PI / 2 },
+      transform: { scale: [0.65, 0.89, 1], position: [1.65, -1.45, -0.165], rotationY: -Math.PI / 2 },
       buttonPos: [2.3, 0.7, 1.08], buttonSize: [0.3, 1.1, 0.4], axis: "y", openAngle: -Math.PI / 2
     },
 
-    {
-      pivotPos: [2.17, -1.2, 1.31], path: "models/greenDoor.glb",
-      transform: { scale: [0.99, 0.95, 1], position: [0.33, -0.1, -1.3], rotationY: -Math.PI / 2 },
-      buttonPos: [2.3, -0.95, 1.65], buttonSize: [0.3, 0.5, 0.7], axis: "y", openAngle: -Math.PI / 2
-    },
+    // {
+    //   pivotPos: [2.17, -1.2, 1.31], path: "models/greenDoor.glb",
+    //   transform: { scale: [0.99, 0.95, 1], position: [0.33, -0.1, -1.3], rotationY: -Math.PI / 2 },
+    //   buttonPos: [2.3, -0.95, 1.65], buttonSize: [0.3, 0.5, 0.7], axis: "y", openAngle: -Math.PI / 2
+    // },
 
     {
       pivotPos: [2.17, 0.25, 1.3], path: "models/greenDoor.glb",
@@ -370,6 +370,7 @@ function buildKitchen() {
     { pos: [2.5, -0.6, 1.1], scale: [0.2, 0.28, 0.22], btnPos: [2.24, -0.61, 1.1], btnSize: [0.1, 0.1, 0.3] },
     { pos: [2.5, -0.817, 1.1], scale: [0.2, 0.4, 0.22], btnPos: [2.24, -0.85, 1.1], btnSize: [0.1, 0.2, 0.3] },
     { pos: [2.5, -1.07, 1.1], scale: [0.2, 0.4, 0.22], btnPos: [2.24, -1.1, 1.1], btnSize: [0.1, 0.2, 0.3] },
+    { pos: [2.42, -0.95, 1.65], scale: [0.2, 0.75, 0.37], btnPos: [2.3, -0.95, 1.65], btnSize: [0.25, 0.2, 0.7] },
   ];
 
   drawerDefs.forEach((d) => {
