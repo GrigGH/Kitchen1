@@ -29,7 +29,7 @@ const CONFIG = {
   },
 
   lights: {
-    ambient: { color: 0xffffff, intensity: 0.9 },
+    ambient: { color: 0xffffff, intensity: 1.3 },
     dir: { color: 0xffffff, intensity: 1.2, pos: [5, 0, 7] },
   },
 
@@ -38,6 +38,7 @@ const CONFIG = {
     drawerLerp: 0.15,
     eps: 0.001
   },
+
 };
 
 const scene = new THREE.Scene();
@@ -54,16 +55,22 @@ camera.position.z = CONFIG.camera.z;
 const renderer = new THREE.WebGLRenderer({ antialias: CONFIG.renderer.antialias });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(CONFIG.renderer.pixelRatio);
+
+
+
 document.body.appendChild(renderer.domElement);
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
 scene.add(new THREE.AmbientLight(CONFIG.lights.ambient.color, CONFIG.lights.ambient.intensity));
-
-// const dirLight = new THREE.DirectionalLight(CONFIG.lights.dir.color, CONFIG.lights.dir.intensity);
-// dirLight.position.set(...CONFIG.lights.dir.pos);
-// scene.add(dirLight);
 
 //Loading UI
 const loadingEl = document.getElementById("loading");
@@ -104,16 +111,21 @@ function applyTransform(obj, t) {
 }
 
 function loadModel(path, parent, transform, onReady) {
-  gltfLoader.load(
-    path,
-    (gltf) => {
-      const model = gltf.scene;
-      (parent || scene).add(model);
-      applyTransform(model, transform);
-      if (onReady) onReady(model, gltf);
-    },
-  );
+  gltfLoader.load(path, (gltf) => {
+    const model = gltf.scene;
+
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      o.castShadow = true;
+      o.receiveShadow = true;
+    });
+
+    (parent || scene).add(model);
+    applyTransform(model, transform);
+    if (onReady) onReady(model, gltf);
+  });
 }
+
 
 //Helper to see pivot points and rotate around them
 
@@ -253,14 +265,14 @@ function buildKitchen() {
     chandelierDir.position.set(0, 0.4, 0);
 
     const target = new THREE.Object3D();
-    target.position.set(0, -2, 0); 
+    target.position.set(0, -2, 0);
     chandelier.add(target);
 
     chandelierDir.target = target;
 
     chandelier.add(chandelierDir);
   });
-    loadModel("models/trashBasket.glb", scene, {
+  loadModel("models/trashBasket.glb", scene, {
     scale: [2, 2, 2],
     position: [2.4, -1.3, -2.45],
     rotationY: -Math.PI / 2,
