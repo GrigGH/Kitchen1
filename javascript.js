@@ -265,6 +265,7 @@ function buildKitchen() {
     position: [2.4, -1.3, -2.45],
     rotationY: -Math.PI / 2,
   });
+
   // Doors
   const doorDefs = [
     {
